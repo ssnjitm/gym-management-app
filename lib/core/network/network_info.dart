@@ -11,7 +11,7 @@ class ConnectionCheckerImpl implements ConnectionChecker {
   
   @override
   Future<bool> get isConnected async {
-    final result = await connectivity.checkConnectivity();
-    return result != ConnectivityResult.none;
+    final results = await connectivity.checkConnectivity();
+    return results.any((r) => r != ConnectivityResult.none);
   }
 }

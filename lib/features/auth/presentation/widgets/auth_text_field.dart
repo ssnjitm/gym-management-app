@@ -8,6 +8,7 @@ class AuthTextField extends StatelessWidget {
   final TextEditingController controller;
   final String? Function(String?)? validator;
   final TextInputType keyboardType;
+  final Widget? prefixIcon;
   final Widget? suffixIcon;
   
   const AuthTextField({
@@ -18,6 +19,7 @@ class AuthTextField extends StatelessWidget {
     required this.controller,
     this.validator,
     this.keyboardType = TextInputType.text,
+    this.prefixIcon,
     this.suffixIcon,
   });
   
@@ -41,6 +43,7 @@ class AuthTextField extends StatelessWidget {
           validator: validator,
           decoration: InputDecoration(
             hintText: hint,
+            prefixIcon: prefixIcon,
             suffixIcon: suffixIcon,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),

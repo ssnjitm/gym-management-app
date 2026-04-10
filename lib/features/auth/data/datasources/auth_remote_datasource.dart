@@ -35,66 +35,28 @@ Future<StaffModel> login({
     print('Auth successful, user ID: ${authResponse.user!.id}');
     print('Fetching staff details...');
     
-    // Fetch staff details from staff table with timeout
-    print('Querying staff table for email: $email');
-    final response = await supabaseClient
+    // Prefer auth.uid mapping (staff_id == auth user id).
+    print('Querying staff table by auth user id...');
+    var response = await supabaseClient
         .from('staff')
         .select()
-        .eq('email', email)
+        .eq('staff_id', authResponse.user!.id)
         .timeout(Duration(seconds: 10));
+
+    // Backward-compatible fallback for existing demo rows not linked by staff_id.
+    if (response.isEmpty) {
+      response = await supabaseClient
+          .from('staff')
+          .select()
+          .eq('email', email)
+          .timeout(Duration(seconds: 10));
+    }
     
     print('Staff query response length: ${response.length}');
     
     if (response.isEmpty) {
       print('No staff record found for email: $email');
-      print('Creating staff record automatically...');
-      
-      // Create staff record automatically
-      try {
-        final newStaffData = {
-          'email': email,
-          'full_name': email.split('@')[0].replaceAll(RegExp(r'[._-]'), ' ').split(' ').map((word) => word[0].toUpperCase() + word.substring(1)).join(' '),
-          'phone': '0000000000', // Default phone
-          'role': 'reception', // Default role
-          'is_active': true,
-          'gym_id': '550e8400-e29b-41d4-a716-446655440000', // Default gym ID
-        };
-        
-        final insertResponse = await supabaseClient
-            .from('staff')
-            .insert(newStaffData)
-            .select()
-            .timeout(Duration(seconds: 10));
-            
-        if (insertResponse.isNotEmpty) {
-          print('Staff record created successfully: ${insertResponse[0]['full_name']}');
-          return StaffModel.fromMap(insertResponse[0]);
-        } else {
-          throw AuthException('Failed to create staff record. Please contact administrator.');
-        }
-      } catch (e) {
-        print('Failed to create staff record: $e');
-        print('Creating fallback mock staff record...');
-        
-        // Create mock staff record for testing
-        try {
-          final mockStaffData = {
-            'staff_id': authResponse.user!.id, // Use auth user ID as staff ID
-            'email': email,
-            'full_name': email.split('@')[0].replaceAll(RegExp(r'[._-]'), ' ').split(' ').map((word) => word[0].toUpperCase() + word.substring(1)).join(' '),
-            'phone': '0000000000',
-            'role': 'reception',
-            'is_active': true,
-            'gym_id': '550e8400-e29b-41d4-a716-446655440000',
-          };
-          
-          print('Mock staff record created: ${mockStaffData['full_name']}');
-          return StaffModel.fromMap(mockStaffData);
-        } catch (mockError) {
-          print('Failed to create mock staff record: $mockError');
-          throw AuthException('Staff record creation failed. Please contact administrator.');
-        }
-      }
+      throw AuthException('Staff profile not found. Ask admin to add this staff email to the staff table.');
     }
     
     final staffData = response[0];

@@ -4,7 +4,6 @@ import 'package:members_management_app/features/auth/domain/usecases/login_useca
 import 'package:members_management_app/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:members_management_app/features/auth/presentation/bloc/auth_event.dart';
 import 'package:members_management_app/features/auth/presentation/bloc/auth_state.dart';
-import '../../domain/entities/staff_entity.dart';
 import '../../../../core/usecase/usecase.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {

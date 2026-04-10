@@ -19,6 +19,23 @@ class AuthFailure extends AuthState {
   
   @override
   List<Object?> get props => [message];
+  
+  String get userMessage {
+    if (message.toLowerCase().contains('invalid') && 
+        message.toLowerCase().contains('credentials')) {
+      return 'Invalid email or password.';
+    }
+    if (message.toLowerCase().contains('staff record not found')) {
+      return 'Staff record not found. Please contact administrator.';
+    }
+    if (message.toLowerCase().contains('row-level security')) {
+      return 'Access denied. Please contact administrator.';
+    }
+    if (message.toLowerCase().contains('connection timeout')) {
+      return 'Connection timeout. Please check your internet connection.';
+    }
+    return message;
+  }
 }
 
 class AuthAuthenticated extends AuthState {

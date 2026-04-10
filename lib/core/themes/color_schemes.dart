@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  // Primary Colors
-  static const Color primary = Color(0xFF2563EB);
-  static const Color primaryDark = Color(0xFF1D4ED8);
-  static const Color primaryLight = Color(0xFF60A5FA);
+  // Primary Red Theme
+  static const Color primary = Color(0xFFD32F2F); // Material Red 700
+  static const Color primaryDark = Color(0xFFB71C1C); // Material Red 900
+  static const Color primaryLight = Color(0xFFEF5350); // Material Red 400
+  static const Color accent = Color(0xFFFF5252); // Red Accent
   
   // Secondary Colors
-  static const Color secondary = Color(0xFF7C3AED);
-  static const Color secondaryDark = Color(0xFF6D28D9);
-  static const Color secondaryLight = Color(0xFFA78BFA);
+  static const Color secondary = Color(0xFF424242);
+  static const Color secondaryDark = Color(0xFF212121);
+  static const Color secondaryLight = Color(0xFF757575);
   
   // Status Colors
   static const Color success = Color(0xFF10B981);
@@ -40,4 +41,26 @@ class AppColors {
   static const Color background = Color(0xFFF9FAFB);
   static const Color surface = Color(0xFFFFFFFF);
   static const Color surfaceDark = Color(0xFF1F2937);
+
+
+  // static const Color primary = Color(0xFF6200EE);
+  // static const Color primaryVariant = Color(0xFF3700B3);
+  // static const Color secondary = Color(0xFF03DAC6);
+  
+  // static const Color background = Color(0xFFF5F5F5);
+  // static const Color surface = Color(0xFFFFFFFF);
+  // static const Color error = Color(0xFFB00020);
+  // static const Color success = Color(0xFF4CAF50);
+  // static const Color warning = Color(0xFFFFC107);
+  // static const Color info = Color(0xFF2196F3);
+  
+  // static const Color grey900 = Color(0xFF212121);
+  // static const Color grey800 = Color(0xFF424242);
+  // static const Color grey700 = Color(0xFF616161);
+  // static const Color grey600 = Color(0xFF757575);
+  // static const Color grey500 = Color(0xFF9E9E9E);
+  // static const Color grey400 = Color(0xFFBDBDBD);
+  // static const Color grey300 = Color(0xFFE0E0E0);
+  // static const Color grey200 = Color(0xFFEEEEEE);
+  // static const Color grey100 = Color(0xFFF5F5F5);
 }

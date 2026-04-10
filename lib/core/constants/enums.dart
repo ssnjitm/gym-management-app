@@ -14,7 +14,8 @@ enum SubscriptionStatus {
 enum PaymentMode {
   cash,
   card,
-  upi,
+  Esewa,
+  Khalti,
   bankTransfer,
 }
 
@@ -25,9 +26,11 @@ extension PaymentModeExtension on PaymentMode {
         return 'Cash';
       case PaymentMode.card:
         return 'Card';
-      case PaymentMode.upi:
-        return 'UPI';
-      case PaymentMode.bankTransfer:
+      case PaymentMode.Esewa:
+        return 'E-sewa';
+      case PaymentMode.Khalti:
+        return 'Khalti';
+        case PaymentMode.bankTransfer:
         return 'Bank Transfer';
     }
   }

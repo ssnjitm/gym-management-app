@@ -22,10 +22,8 @@ class SupabaseClientWrapper {
         password: password,
       );
     } catch (e) {
-      if (e is AuthException) {
-        throw AuthException(message: e.message);
-      }
-      throw AuthException(message: 'Authentication failed: ${e.toString()}');
+      if (e is AuthException) rethrow;
+      throw AuthException('Authentication failed: ${e.toString()}');
     }
   }
   
