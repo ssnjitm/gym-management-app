@@ -1,26 +1,31 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:members_management_app/init_dependencies.dart';
 import 'core/constants/app_constants.dart';
-import 'core/secrets/supabase_secrets.dart';
 import 'core/themes/app_theme.dart';
+import 'core/utils/app_initialization.dart';
+import 'core/widgets/error_widgets.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
-import 'init_dependencies.dart';
 import 'routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
-  // Initialize Supabase
-  await Supabase.initialize(
-    url: SupabaseSecrets.projectUrl,
-    anonKey: SupabaseSecrets.anonKey,
-  );
-  
-  // Initialize dependencies
-  await initDependencies();
-  
-  runApp(const MyApp());
+
+  bool success = await initializeApp();
+  if (success) {
+    runApp(const MyApp());
+  } else {
+    runApp(ErrorApp(onRetry: _retryInitialization));
+  }
+}
+
+Future<void> _retryInitialization() async {
+  bool success = await initializeApp();
+  if (success) {
+    runApp(const MyApp());
+  }
+  // If still failed, ErrorApp remains
 }
 
 class MyApp extends StatelessWidget {
